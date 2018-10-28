@@ -19,14 +19,14 @@ label_encoder = LabelEncoder()
 integer_encoded = label_encoder.fit_transform(labels)
 #print(integer_encoded)
 
-onehot_encoder = OneHotEncoder(categories='auto',sparse=False)
-integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
-onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
+#onehot_encoder = OneHotEncoder(categories='auto',sparse=False)
+#integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
+#onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
 #print (onehot_encoded)
 
 
 
-train_data, valid_data, train_label, valid_label = train_test_split(features, onehot_encoded, test_size=0.2, random_state=65)
+train_data, valid_data, train_label, valid_label = train_test_split(features, integer_encoded, test_size=0.2, random_state=65)
 
 print (np.shape(train_data))
 print (np.shape(train_label))
