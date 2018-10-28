@@ -35,7 +35,7 @@ print (np.shape(train_label))
 model = keras.Sequential([
     keras.layers.Dense(93, activation=tf.nn.relu),
     keras.layers.Dense(93, activation=tf.nn.relu),
-    keras.layers.Dense(18, activation=tf.nn.relu),
+    keras.layers.Dense(27, activation=tf.nn.relu),
     keras.layers.Dense(9, activation=tf.nn.softmax)
 ])
 
@@ -46,7 +46,7 @@ model.compile(optimizer=tf.train.AdamOptimizer(),
 #train model
 
 
-model.fit(train_data, train_label, epochs=10)
+model.fit(train_data, train_label, epochs=12)
 
 #test model
 test_loss, test_acc = model.evaluate(valid_data, valid_label)
