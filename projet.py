@@ -53,3 +53,18 @@ test_loss, test_acc = model.evaluate(valid_data, valid_label)
 
 print (test_acc)
 
+#prediction with this NN
+test_set = pd.read_csv("./test.csv")
+test_features = test_set.loc[:,'feat_1':'feat_93'].as_matrix()
+predictions = model.predict(test_features)
+
+pred_with_id = np.concatenate((test_set.id.values.reshape([144368,1]),predictions),axis=1)
+#Cast float to int to meet submission requirements
+pred_with_id = pred_with_id.astype(int)
+
+#Generate submission data frame from numpy array
+submission = pd.DataFrame(data=pred_with_id,    # values
+              columns=['id','Class_1','Class_2','Class_3','Class_4','Class_5','Class_6','Class_7','Class_8','Class_9'])
+#Save submission as csv, ready to submit
+submission.to_csv("./submission.csv",index=False)
+
