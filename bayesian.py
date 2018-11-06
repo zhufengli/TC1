@@ -2,14 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.naive_bayes import MultinomialNB
-
-def error_rate(predictions, labels):
-    count=0
-    for i in range(len(predictions)):
-        if predictions[i]==labels[i]:
-            count+=1
-    print (count/len(predictions))
+from sklearn.naive_bayes import MultinomialNB,GaussianNB
+from sklearn.metrics import log_loss
 
 
 #load dataset
@@ -29,7 +23,19 @@ train_data, valid_data, train_label, valid_label = train_test_split(features, in
 print (np.shape(train_data))
 print (np.shape(train_label))
 
+#
 clf = MultinomialNB()
 clf.fit(train_data, train_label)
 
-error_rate(clf.predict(valid_data), valid_label)
+print (log_loss(valid_label,clf.predict_proba(valid_data)))
+
+#prediction with this NN
+test_set = pd.read_csv("./test.csv")
+test_features = test_set.loc[:,'feat_1':'feat_93'].as_matrix()
+predictions = clf.predict_proba(test_features)
+
+df = pd.DataFrame(predictions)
+df.index = np.arange(1, len(df) + 1)
+df = df.reset_index()
+df.columns = ['id']+categories
+df.to_csv("NBsubmission.csv",index=False)

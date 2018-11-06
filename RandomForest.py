@@ -16,7 +16,7 @@ train = train.drop('target', axis=1)
 test = test.drop('id', axis=1)
 
 # train a random forest classifier without calibration
-#clf = ensemble.RandomForestClassifier(n_estimators=100, n_jobs=-1)
+#clf = ensemble.RandomForestClassifier(n_estimators=180, n_jobs=-1)
 #clf.fit(train, labels)
 #preds = clf.predict_proba(test)
 
@@ -28,4 +28,4 @@ preds = calibrated_clf.predict_proba(test)
 
 # create submission file
 preds = pd.DataFrame(preds, index=sample.id.values, columns=sample.columns[1:])
-preds.to_csv('benchmark.csv', index_label='id')
+preds.to_csv('RF_Calibsubmission.csv', index_label='id')
